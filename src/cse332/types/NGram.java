@@ -1,7 +1,5 @@
 package cse332.types;
 
-import cse332.interfaces.misc.BString;
-
 public class NGram extends BString<String> {
     public NGram(String[] str) {
         super(str);

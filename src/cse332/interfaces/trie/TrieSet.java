@@ -1,6 +1,6 @@
 package cse332.interfaces.trie;
 
-import cse332.interfaces.misc.BString;
+import cse332.types.BString;
 import cse332.interfaces.misc.Set;
 
 public abstract class TrieSet<A extends Comparable<A>, E extends BString<A>> extends Set<E> {

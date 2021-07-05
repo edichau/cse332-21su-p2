@@ -1,4 +1,4 @@
-package cse332.interfaces.misc;
+package cse332.types;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Iterator;

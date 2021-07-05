@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.function.Supplier;
 
 import cse332.datastructures.trees.BinarySearchTree;
-import cse332.interfaces.misc.BString;
+import cse332.types.BString;
 import cse332.interfaces.misc.Dictionary;
 import cse332.types.AlphabeticString;
 import cse332.types.NGram;

@@ -3,7 +3,6 @@ package cse332.types;
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
 
-import cse332.interfaces.misc.BString;
 import cse332.interfaces.worklists.FixedSizeFIFOWorkList;
 
 public class ByteString extends BString<Byte> {

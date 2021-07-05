@@ -1,6 +1,5 @@
 package cse332.types;
 
-import cse332.interfaces.misc.BString;
 import cse332.interfaces.worklists.FixedSizeFIFOWorkList;
 
 public class AlphabeticString extends BString<Character> {
