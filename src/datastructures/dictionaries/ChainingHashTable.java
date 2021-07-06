@@ -9,7 +9,8 @@ import cse332.interfaces.misc.DeletelessDictionary;
 import cse332.interfaces.misc.Dictionary;
 
 /**
- * TODO: Replace this comment with your own as appropriate.
+ * TODO: READ THIS COMMENT FOR THE DESCRIPTION OF ChainingHashTable
+ *
  * 1. You must implement a generic chaining hashtable. You may not
  *    restrict the size of the input domain (i.e., it must accept 
  *    any key) or the number of inputs (i.e., it must grow as necessary).
