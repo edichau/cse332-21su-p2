@@ -1,7 +1,8 @@
 package p2.sorts;
 
-import java.util.Comparator;
 import cse332.exceptions.NotYetImplementedException;
+
+import java.util.Comparator;
 
 public class TopKSort {
     public static <E extends Comparable<E>> void sort(E[] array, int k) {

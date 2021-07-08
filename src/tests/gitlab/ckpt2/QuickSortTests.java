@@ -1,10 +1,9 @@
 package tests.gitlab.ckpt2;
 
-import java.util.Comparator;
-
-import p2.sorts.QuickSort;
 import org.junit.Test;
-import static org.junit.Assert.*;
+import p2.sorts.QuickSort;
+
+import static org.junit.Assert.assertEquals;
 
 public class QuickSortTests {
 

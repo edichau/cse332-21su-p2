@@ -4,11 +4,12 @@ import cse332.types.AlphabeticString;
 import datastructures.dictionaries.HashTrieMap;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
+
+import static org.junit.Assert.*;
 
 public class HashTrieMapTests {
     protected static HashTrieMap<Character, AlphabeticString, String> STUDENT;
@@ -133,15 +134,11 @@ public class HashTrieMapTests {
         } else if (expected.value != null && !expected.value.equals(student.value)) {
             // If values don't match
             return false;
-        } else if (expected.value == null && student.value != null) {
+        } else // If number of pointers is not the same
+            if (expected.value == null && student.value != null) {
             // If only one of the values are null
             return false;
-        } else if (expected.pointers.size() != student.pointers.size()) {
-            // If number of pointers is not the same
-            return false;
-        } else {
-            return true;
-        }
+        } else return expected.pointers.size() == student.pointers.size();
     }
 
     protected static MockNode node() {

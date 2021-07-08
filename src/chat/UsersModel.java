@@ -1,9 +1,8 @@
 package chat;
 
+import javax.swing.*;
 import java.util.Collections;
 import java.util.List;
-
-import javax.swing.AbstractListModel;
 
 public class UsersModel extends AbstractListModel<String> {
     private List<String> usernames;

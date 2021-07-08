@@ -1,42 +1,27 @@
 package chat;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.EventQueue;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.BorderLayout;
-import java.io.IOException;
-import java.util.function.Supplier;
-
-import javax.swing.Box;
-import javafx.embed.swing.JFXPanel;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JDialog;
-import javax.swing.JProgressBar;
-import javax.swing.SwingUtilities;
-import javax.swing.SwingWorker;
-
 import cse332.interfaces.misc.Dictionary;
 import cse332.types.AlphabeticString;
 import cse332.types.NGram;
+import javafx.embed.swing.JFXPanel;
 import p2.clients.NGramTester;
 import p2.wordsuggestor.WordSuggestor;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.IOException;
+import java.util.function.Supplier;
+
 public class uMessage {
-    private static int N = 3;
-    private static String CORPUS = "eggs.txt";
-    private static Supplier<Dictionary<NGram, Dictionary<AlphabeticString, Integer>>> NEW_OUTER = NGramTester
+    private static final int N = 3;
+    private static final String CORPUS = "eggs.txt";
+    private static final Supplier<Dictionary<NGram, Dictionary<AlphabeticString, Integer>>> NEW_OUTER = NGramTester
             .trieConstructor(NGram.class);
-    private static Supplier<Dictionary<AlphabeticString, Integer>> NEW_INNER = NGramTester
+    private static final Supplier<Dictionary<AlphabeticString, Integer>> NEW_INNER = NGramTester
             .trieConstructor(AlphabeticString.class);
 
     /*

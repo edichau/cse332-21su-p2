@@ -1,10 +1,17 @@
 package chat;
 
-import java.awt.Component;
-import java.awt.FlowLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import cse332.misc.WordReader;
+import javafx.application.Platform;
+import javafx.embed.swing.JFXPanel;
+import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.web.WebView;
+import org.alicebot.ab.*;
+import p2.wordcorrector.SpellingCorrector;
+import p2.wordsuggestor.WordSuggestor;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
@@ -13,31 +20,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.WindowConstants;
-
-import org.alicebot.ab.AIMLProcessor;
-import org.alicebot.ab.Bot;
-import org.alicebot.ab.Chat;
-import org.alicebot.ab.Graphmaster;
-import org.alicebot.ab.MagicBooleans;
-import org.alicebot.ab.MagicStrings;
-import org.alicebot.ab.PCAIMLProcessorExtension;
-
-import cse332.misc.WordReader;
-import javafx.application.Platform;
-import javafx.embed.swing.JFXPanel;
-import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.web.WebView;
-import p2.wordcorrector.SpellingCorrector;
-import p2.wordsuggestor.WordSuggestor;
 
 public class ChatWindow {
     private JFrame frame;

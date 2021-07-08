@@ -1,13 +1,7 @@
 package chat;
 
-import java.awt.Color;
-import java.awt.FontMetrics;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Insets;
-import java.awt.RenderingHints;
-
-import javax.swing.JTextField;
+import javax.swing.*;
+import java.awt.*;
 
 public class HintTextField extends JTextField {
     /**

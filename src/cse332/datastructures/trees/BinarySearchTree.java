@@ -1,13 +1,13 @@
 package cse332.datastructures.trees;
 
-import java.lang.reflect.Array;
-import java.util.Iterator;
-
 import cse332.datastructures.containers.Item;
 import cse332.interfaces.misc.ComparableDictionary;
 import cse332.interfaces.misc.SimpleIterator;
 import cse332.interfaces.worklists.WorkList;
 import datastructures.worklists.ArrayStack;
+
+import java.lang.reflect.Array;
+import java.util.Iterator;
 
 /**
  * BinarySearchTree implements the ComparableDictionary interface using a binary

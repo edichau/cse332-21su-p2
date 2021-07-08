@@ -1,11 +1,9 @@
 package tests.gitlab.ckpt2;
 
-import p2.sorts.HeapSort;
 import org.junit.Test;
+import p2.sorts.HeapSort;
 
-import java.util.Comparator;
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class HeapSortTests {
 

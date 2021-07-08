@@ -1,12 +1,12 @@
 package datastructures.dictionaries;
 
-import java.util.Iterator;
-import java.util.function.Supplier;
-
 import cse332.datastructures.containers.Item;
 import cse332.exceptions.NotYetImplementedException;
 import cse332.interfaces.misc.DeletelessDictionary;
 import cse332.interfaces.misc.Dictionary;
+
+import java.util.Iterator;
+import java.util.function.Supplier;
 
 /**
  * 1. You must implement a generic chaining hashtable. You may not
@@ -25,7 +25,7 @@ import cse332.interfaces.misc.Dictionary;
 
  */
 public class ChainingHashTable<K, V> extends DeletelessDictionary<K, V> {
-    private Supplier<Dictionary<K, V>> newChain;  
+    private final Supplier<Dictionary<K, V>> newChain;
 
     public ChainingHashTable(Supplier<Dictionary<K, V>> newChain) {
         this.newChain = newChain;

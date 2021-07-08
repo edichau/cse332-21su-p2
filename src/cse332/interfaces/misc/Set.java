@@ -1,8 +1,8 @@
 package cse332.interfaces.misc;
 
-import java.util.Iterator;
-
 import cse332.datastructures.containers.Item;
+
+import java.util.Iterator;
 
 public abstract class Set<E> implements Iterable<E> {
     protected Dictionary<E, Boolean> map;

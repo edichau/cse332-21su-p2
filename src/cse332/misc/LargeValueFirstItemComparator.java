@@ -1,8 +1,8 @@
 package cse332.misc;
 
-import java.util.Comparator;
-
 import cse332.datastructures.containers.Item;
+
+import java.util.Comparator;
 
 /**
  * A Comparator for Item<K, V> that sorts items first by VALUE, then by KEY.

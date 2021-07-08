@@ -1,10 +1,9 @@
 package tests.gitlab.ckpt2;
 
-import java.util.Comparator;
-
-import p2.sorts.TopKSort;
 import org.junit.Test;
-import static org.junit.Assert.*;
+import p2.sorts.TopKSort;
+
+import static org.junit.Assert.assertEquals;
 
 public class TopKSortTests {
 

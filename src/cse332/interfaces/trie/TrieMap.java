@@ -1,18 +1,18 @@
 package cse332.interfaces.trie;
 
-import java.lang.reflect.Array;
-import java.lang.reflect.InvocationTargetException;
-import java.util.Iterator;
-import java.util.Map.Entry;
-
 import cse332.datastructures.containers.Item;
-import cse332.types.BString;
 import cse332.interfaces.misc.Dictionary;
 import cse332.interfaces.misc.SimpleIterator;
 import cse332.interfaces.worklists.LIFOWorkList;
 import cse332.interfaces.worklists.WorkList;
+import cse332.types.BString;
 import datastructures.worklists.ArrayStack;
 import datastructures.worklists.ListFIFOQueue;
+
+import java.lang.reflect.Array;
+import java.lang.reflect.InvocationTargetException;
+import java.util.Iterator;
+import java.util.Map.Entry;
 
 /**
  * An object that maps keys (made up of characters of a bounded type) to values.

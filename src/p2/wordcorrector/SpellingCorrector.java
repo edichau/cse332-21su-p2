@@ -1,14 +1,14 @@
 package p2.wordcorrector;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
-
 import cse332.interfaces.worklists.FIFOWorkList;
 import cse332.types.AlphabeticString;
 import datastructures.worklists.ListFIFOQueue;
 import p2.sorts.QuickSort;
 import p2.wordsuggestor.WordSuggestor;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 public class SpellingCorrector {
     private final AutocompleteTrie dictionary;

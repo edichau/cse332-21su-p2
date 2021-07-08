@@ -1,15 +1,16 @@
 package p2.wordsuggestor;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.Stack;
-
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-import org.json.simple.JSONArray;
 
 public final class ParseFBMessages {
     private ParseFBMessages() {
@@ -57,7 +58,7 @@ public final class ParseFBMessages {
             }
         }
 
-        PrintWriter out = new PrintWriter("me.txt", "UTF-8");
+        PrintWriter out = new PrintWriter("me.txt", StandardCharsets.UTF_8);
 
         while (!corpus.isEmpty()) {
             out.println(corpus.pop());

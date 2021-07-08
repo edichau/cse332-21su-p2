@@ -1,10 +1,10 @@
 package cse332.types;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.Iterator;
-
 import cse332.interfaces.worklists.FixedSizeFIFOWorkList;
 import datastructures.worklists.CircularArrayFIFOQueue;
+
+import java.lang.reflect.InvocationTargetException;
+import java.util.Iterator;
 
 public abstract class BString<Alphabet extends Comparable<Alphabet>> implements Iterable<Alphabet>, Comparable<BString<Alphabet>> {
     protected FixedSizeFIFOWorkList<Alphabet> str;

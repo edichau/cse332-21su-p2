@@ -4,11 +4,12 @@ import cse332.datastructures.containers.Item;
 import cse332.datastructures.trees.BinarySearchTree.BSTNode;
 import cse332.interfaces.misc.Dictionary;
 import datastructures.dictionaries.AVLTree;
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-
 import org.junit.Test;
-import static org.junit.Assert.*;
+
+import java.lang.reflect.Field;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class AVLTreeTests {
 
@@ -58,7 +59,7 @@ public class AVLTreeTests {
 //		{10, 14, 10, 31, 10, 13, 10, 10, 12, 10, 13, 10, 10, 11, 10, 14, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0}
 //		{10, 14, 31, 13, 12, 11, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0}
 
-		BSTNode root = (BSTNode) getField(tree, "root");
+		BSTNode root = getField(tree, "root");
 
 		String trueData = " [8 [4 [2 [1 [0..].] [3..]] [6 [5..] [7..]]] [12 [10 [9..] [11..]] [14 [13..] [31..]]]]";
 		String trueCounts = " [1 [1 [1 [1 [1..].] [1..]] [1 [1..] [1..]]] [1 [9 [1..] [1..]] [2 [2..] [1..]]]]";

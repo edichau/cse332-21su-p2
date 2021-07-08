@@ -1,10 +1,6 @@
 package chat;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
@@ -22,7 +18,7 @@ public class UMessageServerConnection extends Thread {
     private final Socket socket;
 
     public UMessageServerConnection(uMessage main, String username)
-            throws UnknownHostException, IOException {
+            throws IOException {
         this.username = username.toLowerCase();
         this.main = main;
 

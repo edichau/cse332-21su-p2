@@ -1,9 +1,5 @@
 package p2.wordsuggestor;
 
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.function.Supplier;
-
 import cse332.datastructures.containers.Item;
 import cse332.exceptions.NotYetImplementedException;
 import cse332.interfaces.misc.Dictionary;
@@ -11,6 +7,10 @@ import cse332.misc.LargeValueFirstItemComparator;
 import cse332.sorts.InsertionSort;
 import cse332.types.AlphabeticString;
 import cse332.types.NGram;
+
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.function.Supplier;
 
 public class NGramToNextChoicesMap {
     private final Dictionary<NGram, Dictionary<AlphabeticString, Integer>> map;

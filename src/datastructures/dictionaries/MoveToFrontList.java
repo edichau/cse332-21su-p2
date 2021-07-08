@@ -1,10 +1,10 @@
 package datastructures.dictionaries;
 
-import java.util.Iterator;
-
 import cse332.datastructures.containers.Item;
 import cse332.exceptions.NotYetImplementedException;
 import cse332.interfaces.misc.DeletelessDictionary;
+
+import java.util.Iterator;
 
 /**
  * 1. The list is typically not sorted.

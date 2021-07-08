@@ -1,17 +1,10 @@
 package chat;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Insets;
-import java.awt.RenderingHints;
+import javax.swing.border.AbstractBorder;
+import java.awt.*;
 import java.awt.geom.Area;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
-
-import javax.swing.border.AbstractBorder;
 
 public class RoundedCornerBorder extends AbstractBorder {
     private static final long serialVersionUID = 1L;

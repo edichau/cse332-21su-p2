@@ -1,19 +1,20 @@
 package tests.gitlab.ckpt1;
 
 import cse332.interfaces.worklists.PriorityWorkList;
+import cse332.interfaces.worklists.WorkList;
 import datastructures.worklists.MinFourHeapComparable;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.PriorityQueue;
-import java.util.Queue;
-import java.util.Random;
+import java.util.*;
 
 import static org.junit.Assert.*;
 
-public class MinFourHeapComparableTests extends WorklistGradingTests {
+public class MinFourHeapComparableTests {
+    private static WorkList<String> STUDENT_STR;
+    private static WorkList<Double> STUDENT_DOUBLE;
+    private static WorkList<Integer> STUDENT_INT;
     private static Random RAND;
 
     @Before
@@ -22,6 +23,56 @@ public class MinFourHeapComparableTests extends WorklistGradingTests {
         STUDENT_DOUBLE = new MinFourHeapComparable<>();
         STUDENT_INT = new MinFourHeapComparable<>();
         RAND = new Random(42);
+    }
+
+    @Test(timeout = 3000)
+    public void testHasWork() {
+        assertFalse(STUDENT_INT.hasWork());
+    }
+
+    @Test(timeout = 3000)
+    public void testHasWorkAfterAdd() {
+        STUDENT_INT.add(1);
+        assertTrue(STUDENT_INT.hasWork());
+    }
+
+    @Test(timeout = 3000)
+    public void testHasWorkAfterAddRemove() {
+        for (int i = 0; i < 1000; i++) {
+            STUDENT_DOUBLE.add(Math.random());
+        }
+        for (int i = 0; i < 1000; i++) {
+            STUDENT_DOUBLE.next();
+        }
+        assertFalse(STUDENT_DOUBLE.hasWork());
+    }
+    @Test(timeout = 3000)
+    public void testPeekHasException() {
+        assertTrue(doesPeekThrowException(STUDENT_INT));
+
+        addAndRemove(STUDENT_INT, 42, 10);
+        assertTrue(doesPeekThrowException(STUDENT_INT));
+    }
+
+    @Test(timeout = 3000)
+    public void testNextHasException() {
+        assertTrue(doesNextThrowException(STUDENT_INT));
+
+        addAndRemove(STUDENT_INT, 42, 10);
+        assertTrue(doesNextThrowException(STUDENT_INT));
+    }
+    @Test(timeout = 3000)
+    public void testClear() {
+        addAll(STUDENT_STR, new String[]{"Beware", "the", "Jabberwock", "my", "son!"});
+
+        assertTrue(STUDENT_STR.hasWork());
+        assertEquals(5, STUDENT_STR.size());
+
+        STUDENT_STR.clear();
+        assertFalse(STUDENT_STR.hasWork());
+        assertEquals(0, STUDENT_STR.size());
+        assertTrue(doesPeekThrowException(STUDENT_STR));
+        assertTrue(doesNextThrowException(STUDENT_STR));
     }
 
     @Test(timeout = 3000)
@@ -65,16 +116,6 @@ public class MinFourHeapComparableTests extends WorklistGradingTests {
         }
     }
 
-    private boolean isSame(String... args) {
-        String first = args[0];
-        for (String arg : args) {
-            if (!first.equals(arg)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
     @Test(timeout = 3000)
     public void testHugeHeap() {
         PriorityWorkList<String> heap = new MinFourHeapComparable<>();
@@ -110,25 +151,6 @@ public class MinFourHeapComparableTests extends WorklistGradingTests {
         }
     }
 
-    public static class Coordinate implements Comparable<Coordinate> {
-        private int x;
-        private int y;
-
-        public Coordinate(int x, int y) {
-            this.x = x;
-            this.y = y;
-        }
-
-        // What exactly this comparable method is doing is somewhat arbitrary.
-        public int compareTo(Coordinate other) {
-            if (this.x != other.x) {
-                return this.x - other.x;
-            } else {
-                return this.y - other.y;
-            }
-        }
-    }
-
     @Test(timeout = 3000)
     public void checkStructure() {
         PriorityWorkList<Integer> heap = new MinFourHeapComparable<>();
@@ -150,6 +172,35 @@ public class MinFourHeapComparableTests extends WorklistGradingTests {
         assertTrue(heapStr2.contains(heapExp2));
     }
 
+    private boolean isSame(String... args) {
+        String first = args[0];
+        for (String arg : args) {
+            if (!first.equals(arg)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static class Coordinate implements Comparable<Coordinate> {
+        private final int x;
+        private final int y;
+
+        public Coordinate(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
+
+        // What exactly this comparable method is doing is somewhat arbitrary.
+        public int compareTo(Coordinate other) {
+            if (this.x != other.x) {
+                return this.x - other.x;
+            } else {
+                return this.y - other.y;
+            }
+        }
+    }
+
     protected <T> T getField(Object o, String fieldName) {
         try {
             Field field = o.getClass().getSuperclass().getDeclaredField(fieldName);
@@ -166,5 +217,38 @@ public class MinFourHeapComparableTests extends WorklistGradingTests {
                 return null;
             }
         }
+    }
+
+    protected static <E> void addAll(WorkList<E> worklist, E[] values) {
+        for (E value : values) {
+            worklist.add(value);
+        }
+    }
+
+    protected static <E> void addAndRemove(WorkList<E> worklist, E value, int amount) {
+        for (int i = 0; i < amount; i++) {
+            worklist.add(value);
+        }
+        for (int i = 0; i < amount; i++) {
+            worklist.next();
+        }
+    }
+
+    protected static <E> boolean doesPeekThrowException(WorkList<E> worklist) {
+        try {
+            worklist.peek();
+        } catch (NoSuchElementException e) {
+            return true;
+        }
+        return false;
+    }
+
+    protected static <E> boolean doesNextThrowException(WorkList<E> worklist) {
+        try {
+            worklist.next();
+        } catch (NoSuchElementException e) {
+            return true;
+        }
+        return false;
     }
 }

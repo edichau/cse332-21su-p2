@@ -1,8 +1,8 @@
 package cse332.interfaces.misc;
 
-import java.util.Iterator;
-
 import cse332.datastructures.containers.Item;
+
+import java.util.Iterator;
 
 /**
  * An object that maps keys to values. A Dictionary cannot contain duplicate

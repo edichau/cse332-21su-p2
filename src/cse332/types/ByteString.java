@@ -1,9 +1,10 @@
 package cse332.types;
 
+import cse332.interfaces.worklists.FixedSizeFIFOWorkList;
+
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
-
-import cse332.interfaces.worklists.FixedSizeFIFOWorkList;
+import java.nio.charset.StandardCharsets;
 
 public class ByteString extends BString<Byte> {
     public ByteString(String s) {
@@ -32,10 +33,6 @@ public class ByteString extends BString<Byte> {
         for (int i = 0; i < this.str.size(); i++) {
             out.write(this.str.peek(i));
         }
-        try {
-            return out.toString("UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            return out.toString();
-        }
+        return out.toString(StandardCharsets.UTF_8);
     }
 }
