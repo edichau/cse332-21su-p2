@@ -3,8 +3,6 @@ package datastructures.dictionaries;
 import cse332.datastructures.trees.BinarySearchTree;
 
 /**
- * TODO: READ THIS COMMENT FOR THE DESCRIPTION OF AVLTree
- *
  * AVLTree must be a subclass of BinarySearchTree<E> and must use
  * inheritance and calls to superclass methods to avoid unnecessary
  * duplication or copying of functionality.

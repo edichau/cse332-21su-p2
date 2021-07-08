@@ -7,8 +7,6 @@ import cse332.exceptions.NotYetImplementedException;
 import cse332.interfaces.misc.DeletelessDictionary;
 
 /**
- * TODO: READ THIS COMMENT FOR THE DESCRIPTION OF MoveToFrontList
- *
  * 1. The list is typically not sorted.
  * 2. Add new items to the front of the list.
  * 3. Whenever find is called on an item, move it to the front of the 
