@@ -9,7 +9,7 @@ import cse332.interfaces.worklists.PriorityWorkList;
  */
 public class MinFourHeapComparable<E extends Comparable<E>> extends PriorityWorkList<E> {
     /* Do not change the name of this field; the tests rely on it to work correctly. */
-    private final E[] data;
+    private E[] data;
 
     public MinFourHeapComparable() {
         throw new NotYetImplementedException();

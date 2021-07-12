@@ -25,7 +25,7 @@ import java.util.function.Supplier;
 
  */
 public class ChainingHashTable<K, V> extends DeletelessDictionary<K, V> {
-    private final Supplier<Dictionary<K, V>> newChain;
+    private Supplier<Dictionary<K, V>> newChain;
 
     public ChainingHashTable(Supplier<Dictionary<K, V>> newChain) {
         this.newChain = newChain;
