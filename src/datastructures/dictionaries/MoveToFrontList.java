@@ -3,6 +3,8 @@ package datastructures.dictionaries;
 import cse332.datastructures.containers.Item;
 import cse332.exceptions.NotYetImplementedException;
 import cse332.interfaces.misc.DeletelessDictionary;
+import cse332.interfaces.misc.Dictionary;
+import datastructures.worklists.ArrayStack;
 
 import java.util.Iterator;
 
@@ -20,18 +22,60 @@ import java.util.Iterator;
  *    dictionary/list's iterator. 
  */
 public class MoveToFrontList<K, V> extends DeletelessDictionary<K, V> {
+    private ArrayStack<Item<K, V>> stack;
+
+    public MoveToFrontList() {
+        super();
+        this.stack = new ArrayStack<>();
+    }
+
     @Override
     public V insert(K key, V value) {
-        throw new NotYetImplementedException();
+        if(key == null || value == null) {
+            throw new IllegalArgumentException();
+        }
+
+        V oldVal = find(key); //key is now at top of stack from searching. If key doesn't already exist value is null
+        if(oldVal != null) {
+            stack.peek().value = value;
+        } else {
+            stack.add(new Item<>(key,value));
+        }
+        return oldVal;
     }
 
     @Override
     public V find(K key) {
-        throw new NotYetImplementedException();
+        if(key == null) {
+            throw new IllegalArgumentException();
+        }
+        ArrayStack<Item<K,V>> temp = new ArrayStack<>();
+        boolean foundItem = false;
+        Item<K, V> value = new Item<>(key, null);
+
+        //iterate through stack pushing values to temp to preserve order
+        while(stack.hasWork() && !foundItem) {
+            Item<K, V> next = stack.next();
+            if(next.key.equals(key)) {
+                foundItem = true;
+                value = next;
+            } else {
+                temp.add(next);
+            }
+        }
+        //push values back onto stack in the order they were removed starting with most recently removed
+        while(temp.hasWork()) {
+            stack.add(temp.next());
+        }
+        //if in list, we put key to front with new value
+        if(value.value != null) {
+            stack.add(value);
+        }
+        return value.value;
     }
 
     @Override
     public Iterator<Item<K, V>> iterator() {
-        throw new NotYetImplementedException();
+        return null;
     }
 }
