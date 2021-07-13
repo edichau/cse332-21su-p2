@@ -3,6 +3,7 @@ package datastructures.worklists;
 import cse332.exceptions.NotYetImplementedException;
 import cse332.interfaces.worklists.FixedSizeFIFOWorkList;
 
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
@@ -85,14 +86,32 @@ public class CircularArrayFIFOQueue<E extends Comparable<E>> extends FixedSizeFI
 
     @Override
     public int compareTo(FixedSizeFIFOWorkList<E> other) {
-        // You will implement this method in project 2. Leave this method unchanged for project 1.
-        throw new NotYetImplementedException();
+        if (!(other instanceof FixedSizeFIFOWorkList<?>)) {
+            throw new IllegalArgumentException();
+        }
+        FixedSizeFIFOWorkList<E> input = (FixedSizeFIFOWorkList<E>) other;
+        Iterator<E> itr = this.iterator();
+        Iterator<E> inputItr = input.iterator();
+
+        //we start by comparing each element. If they differ we return E's compareTo method
+        while (itr.hasNext() && inputItr.hasNext()) {
+            E next = itr.next();
+            E compare = inputItr.next();
+            if(!next.equals(compare)) {
+                return next.compareTo(compare);
+            }
+        }
+        //if each element is equal we then check if they have the same size
+        if(this.size() != input.size()) {
+            return this.size() - input.size();
+        }
+        //if they have the same elements and are the same size, we have determined they are the same
+        return 0;
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public boolean equals(Object obj) {
-        // You will finish implementing this method in project 2. Leave this method unchanged for project 1.
         if (this == obj) {
             return true;
         }
@@ -100,18 +119,23 @@ public class CircularArrayFIFOQueue<E extends Comparable<E>> extends FixedSizeFI
             return false;
         }
         else {
-            // Uncomment the line below for p2 when you implement equals
-            // FixedSizeFIFOWorkList<E> other = (FixedSizeFIFOWorkList<E>) obj;
-
-            // Your code goes here
-
-            throw new NotYetImplementedException();
+            FixedSizeFIFOWorkList<?> input = (FixedSizeFIFOWorkList<?>) obj;
+            if(this.size != input.size()) {
+                return false;
+            }
+            Iterator<?> inputItr = ((FixedSizeFIFOWorkList<?>) obj).iterator();
+            Iterator<E> itr = this.iterator();
+            while (itr.hasNext() && inputItr.hasNext()) {
+                if(!itr.next().equals(inputItr.next())) {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 
     @Override
     public int hashCode() {
-        // You will implement this method in project 2. Leave this method unchanged for project 1.
-        throw new NotYetImplementedException();
+        return this.toString().hashCode();
     }
 }
