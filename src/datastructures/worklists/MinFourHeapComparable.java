@@ -27,9 +27,12 @@ public class MinFourHeapComparable<E extends Comparable<E>> extends PriorityWork
 
     @Override
     public void add(E work) {
+        // resizes the array if theres more data
         if (this.size == this.data.length) {
             resize();
         }
+
+        // puts in the new work element and percolates it up to find its place
         this.data[this.size++] = work;
         this.percolateUp();
     }
@@ -50,6 +53,7 @@ public class MinFourHeapComparable<E extends Comparable<E>> extends PriorityWork
 
         E minElem = this.data[0];
 
+        // puts the last element as the first, then percolates down to find its place
         this.data[0] = this.data[--this.size];
         percolateDown(0);
 
@@ -80,6 +84,7 @@ public class MinFourHeapComparable<E extends Comparable<E>> extends PriorityWork
             E child = data[i];
             E parent = data [(i-1)/4];
 
+            // swaps parent and child if parent is larger than child
             if (child.compareTo(parent) < 0) {
                 data[(i-1)/4] = child;
                 data[i] = parent;
@@ -94,6 +99,7 @@ public class MinFourHeapComparable<E extends Comparable<E>> extends PriorityWork
             return;
         }
 
+        // finds the smallest child of all the children of a parent
         int childIndex = index * 4 + 2;
         while (childIndex <= index * 4 + 4 && childIndex < this.size) {
             if (this.data[childIndex].compareTo(this.data[minChildIndex]) < 0) {
@@ -102,6 +108,7 @@ public class MinFourHeapComparable<E extends Comparable<E>> extends PriorityWork
             childIndex++;
         }
 
+        // swaps the parent and the smallest child when the parent is greater
         if (this.data[index].compareTo(this.data[minChildIndex]) > 0) {
             E tmp = this.data[index];
             this.data[index] = this.data[minChildIndex];
