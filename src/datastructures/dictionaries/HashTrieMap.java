@@ -15,13 +15,14 @@ import cse332.interfaces.trie.TrieMap;
  * for method specifications.
  */
 public class HashTrieMap<A extends Comparable<A>, K extends BString<A>, V> extends TrieMap<A, K, V> {
-    public class HashTrieNode extends TrieNode<Map<A, HashTrieNode>, HashTrieNode> {
+    public class HashTrieNode extends TrieNode<ChainingHashTable<A, HashTrieNode>, HashTrieNode> {
         public HashTrieNode() {
             this(null);
         }
 
         public HashTrieNode(V value) {
-            this.pointers = new HashMap<A, HashTrieNode>();
+            //MoveToFrontList<A, HashTrieNode> List = new MoveToFrontList<A, HashTrieNode>();
+            this.pointers = new ChainingHashTable<>(MoveToFrontList<A, HashTrieNode>::new);
             this.value = value;
         }
 
