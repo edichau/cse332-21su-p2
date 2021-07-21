@@ -33,15 +33,14 @@ public class ChainingHashTable<K, V> extends DeletelessDictionary<K, V> {
     private Supplier<Dictionary<K, V>> newChain;
 
     private ListFIFOQueue<Integer> primeList;
-    private int numItems;
-    private Dictionary[] table;
+    private Dictionary<K,V>[] table;
 
 
     public ChainingHashTable(Supplier<Dictionary<K, V>> newChain) {
+        super();
         this.newChain = newChain;
         this.primeList = new ListFIFOQueue<>();
         initializePrimeList();
-        numItems = 0;
         this.table = new Dictionary[11];
     }
 
@@ -55,17 +54,17 @@ public class ChainingHashTable<K, V> extends DeletelessDictionary<K, V> {
             resize();
         }
 
-        int index = key.hashCode();
+        int index = key.hashCode() % table.length;
         if (table[index] == null) {
             Dictionary<K, V> dict = newChain.get();
             dict.insert(key, value);
             table[index] = dict;
-            numItems++;
+            this.size++;
             return null;
         } else {
             V oldVal = (V) table[index].insert(key, value);
             if (oldVal == null) {
-                numItems++;
+                this.size++;
             }
             return oldVal;
         }
@@ -74,7 +73,7 @@ public class ChainingHashTable<K, V> extends DeletelessDictionary<K, V> {
     @SuppressWarnings("unchecked")
     @Override
     public V find(K key) {
-        int index = key.hashCode();
+        int index = key.hashCode() % table.length;
         if (table[index] == null) {
             return null;
         } else {
@@ -86,7 +85,7 @@ public class ChainingHashTable<K, V> extends DeletelessDictionary<K, V> {
     @Override
     public Iterator<Item<K, V>> iterator() { return new CHTIterator(); }
 
-    @SuppressWarnings("unchecked")
+
     private class CHTIterator extends SimpleIterator<Item<K, V>> {
         private ListFIFOQueue<Dictionary<K,V>> dictionaries;
         Iterator<Item<K,V>> dictItr;
@@ -101,19 +100,23 @@ public class ChainingHashTable<K, V> extends DeletelessDictionary<K, V> {
                 }
             }
             if(dictionaries.hasWork()) {
-                dictItr = dictionaries.next().iterator();
+                dictItr= dictionaries.next().iterator();
             }
         }
 
         @Override
         public boolean hasNext() {
-            return dictItr.hasNext();
+            return dictItr.hasNext() || dictionaries.hasWork();
         }
 
         @Override
         public Item<K, V> next() {
             if (!dictItr.hasNext()) {
-                dictItr = dictionaries.next().iterator();
+                if(dictionaries.hasWork()) {
+                    dictItr = dictionaries.next().iterator();
+                }else {
+                    return null;
+                }
             }
             return dictItr.next();
         }
@@ -137,8 +140,8 @@ public class ChainingHashTable<K, V> extends DeletelessDictionary<K, V> {
     }
 
     private boolean needResize() {
-        int size = table.length;
-        double lambda = (double) (numItems + 1) / size;
+        int tableSize = table.length;
+        double lambda = (double) (this.size + 1) / tableSize;
 
         return lambda > 2;
     }
@@ -153,11 +156,12 @@ public class ChainingHashTable<K, V> extends DeletelessDictionary<K, V> {
 
     @SuppressWarnings("unchecked")
     private void resize() {
-        Dictionary<K,V>[] newTable = new Dictionary[getNewSize()];
+        int newSize = getNewSize();
+        Dictionary<K,V>[] newTable = new Dictionary[newSize];
         for (Dictionary<K,V> index : table) { //Iterate through hashTable to rehash
             if (index != null) { //Index is nonNull, rehash every key at index
                 for (Item<K, V> item : index) {
-                    int newIndex = item.key.hashCode();
+                    int newIndex = item.key.hashCode() % newSize;
                     if (newTable[newIndex] == null) {
                         Dictionary<K, V> dict = newChain.get();
                         dict.insert(item.key, item.value);
