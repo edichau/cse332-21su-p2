@@ -136,6 +136,10 @@ public class CircularArrayFIFOQueue<E extends Comparable<E>> extends FixedSizeFI
 
     @Override
     public int hashCode() {
-        return this.toString().hashCode();
+        int result= 31;
+        for (E element : elements) {
+            result = 31 * result + element.hashCode();
+        }
+        return result;
     }
 }
