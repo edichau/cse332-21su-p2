@@ -11,6 +11,7 @@ import datastructures.worklists.ArrayStack;
 import datastructures.worklists.ListFIFOQueue;
 
 import java.util.Iterator;
+import java.util.Map;
 import java.util.function.Supplier;
 
 /**
@@ -29,7 +30,7 @@ import java.util.function.Supplier;
  *    dictionary/list and return that dictionary/list's iterator. 
 
  */
-public class ChainingHashTable<K, V> extends DeletelessDictionary<K, V> {
+public class ChainingHashTable<K, V> extends DeletelessDictionary<K,V> {
     private Supplier<Dictionary<K, V>> newChain;
 
     private ListFIFOQueue<Integer> primeList;
@@ -106,7 +107,11 @@ public class ChainingHashTable<K, V> extends DeletelessDictionary<K, V> {
 
         @Override
         public boolean hasNext() {
-            return dictItr.hasNext() || dictionaries.hasWork();
+            if(dictItr == null) {
+                return false;
+            } else {
+                return dictItr.hasNext() || dictionaries.hasWork();
+            }
         }
 
         @Override

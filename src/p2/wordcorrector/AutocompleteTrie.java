@@ -13,22 +13,24 @@ public class AutocompleteTrie extends HashTrieMap<Character, AlphabeticString, I
         @SuppressWarnings("unchecked")
         HashTrieNode current = (HashTrieNode) this.root;
         for (Character item : key.toCharArray()) {
-            if (!current.pointers.containsKey(item)) {
+            if (current.pointers.find(item) == null) {
                 return null;
             }
             else {
-                current = current.pointers.get(item);
+                current = current.pointers.find(item);
             }
         }
 
         String result = key;
 
+
         while (current.pointers.size() == 1) {
             if (current.value != null) {
                 return null;
             }
-            result += current.pointers.keySet().iterator().next();
-            current = current.pointers.values().iterator().next();
+            HashTrieNode temp = current.pointers.iterator().next().value;
+            result += temp.value;
+            current = temp;
         }
 
         // Switch this to return null to only complete if we're at the end of
