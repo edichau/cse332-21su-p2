@@ -30,85 +30,133 @@ import javafx.scene.Node;
 
 public class AVLTree<K extends Comparable<? super K>, V> extends BinarySearchTree<K, V>  {
 
+    private AVLNode current;
     @Override
-    public V insert(K key, V value) {
-        if (key == null || value == null) {
+    public V insert(K key, V value){
+        if(key == null || value == null) {
             throw new IllegalArgumentException();
         }
+        this.root = insertHelper(key, (AVLNode) this.root);
+        V oldValue = current.value;
+        current.value = value;
+        return oldValue;
+    }
 
-        // copied from find in BinarySearchTree
-        AVLNode prev = null;
-        AVLNode current = (AVLNode) this.root;
-        int maxLength;
+    private AVLNode insertHelper(K key, AVLNode node){
+        if(node == null) {
+            current = new AVLNode(key, null);
+            size++;
+            return current;
+        }
 
-        if(this.root == null) {
-            maxLength = 2;
+        int compareResult = key.compareTo(node.key);
+
+        if(compareResult < 0) {
+            node.children[0] = insertHelper(key, (AVLNode) node.children[0]);
+        } else if (compareResult > 0){
+            node.children[1] = insertHelper(key, (AVLNode) node.children[1]);
         } else {
-            maxLength = ((AVLNode) this.root).getHeight() + 2;
+            current = node;
+            return node;
         }
 
-        CircularArrayFIFOQueue<AVLNode> path = new CircularArrayFIFOQueue<>(maxLength);
-        CircularArrayFIFOQueue<Integer> childPath = new CircularArrayFIFOQueue<>(maxLength);
+        return balance(node);
+    }
 
-        int child = -1;
+    private static final int ALLOWED_IMBALANCE = 1;
 
-        while (current != null) {
-            int direction = Integer.signum(key.compareTo(current.key));
+    private int getBalance(AVLNode node){
+        return (node == null) ? 0 :
+                getHeight(node.toAVL(0)) - getHeight(node.toAVL(1));
+    }
 
-            // We found the key!
-            if (direction == 0) {
-                break;
-            } else {
-                // direction + 1 = {0, 2} -> {0, 1}
-                path.add(current);
-                child = Integer.signum(direction + 1);
-                childPath.add(child);
-                prev = current;
-                current = (AVLNode) current.children[child];
+    private AVLNode balance(AVLNode node){
+        node.height = 1 + Math.max(getHeight(node.toAVL(0)), getHeight(node.toAVL(1)));
+
+        int balVal = getBalance(node);
+        if(balVal > ALLOWED_IMBALANCE) {
+            int leftBalVal = getBalance(node.toAVL(0));
+            if(leftBalVal < 0) {
+                node.children[0] = rotateLeft(node.toAVL(0));
             }
-
+            node = rotateRight(node);
+        } else if(balVal < -ALLOWED_IMBALANCE) {
+            int rightBalVal = getBalance(node.toAVL(1));
+            if(rightBalVal > 0) {
+                node.children[1] = rotateRight(node.toAVL(1));
+            }
+            node = rotateLeft(node);
         }
 
-        //after the loop, the node we want to insert into is found
-
-        //if the node we found already exists, then we dont have to create a new node
-        if (current != null) {
-            V oldValue = current.value;
-            current.value = value;
-
-            return oldValue;
-        }
-
-        // Create and insert the new node
-        current = new AVLNode(key, value);
-        path.add(current);
-        this.size++;
-
-        prev.children[child] = current;
-        //TODO: update the height
-        //TODO: Balance the tree
+        return node;
     }
 
-    private int updateHeights(CircularArrayFIFOQueue<AVLNode> path) {
+    public AVLNode rotateRight (AVLNode parent) {
+        AVLNode temp = parent.toAVL(0);
+        parent.children[0] = temp.toAVL(1);
+        temp.children[1] = parent;
+        // update heights
+        parent.height = 1 + Math.max(getHeight(parent.toAVL(0)),
+                getHeight(parent.toAVL(1)));
+        temp.height = 1 + Math.max(getHeight(temp.toAVL(0)),
+                getHeight(temp.toAVL(1)));
 
+        return temp;
     }
 
-    private void balance(CircularArrayFIFOQueue<AVLNode> path, CircularArrayFIFOQueue<Integer> childPath, int index) {
+    public AVLNode rotateLeft (AVLNode parent) {
+        AVLNode temp = parent.toAVL(1);
+        parent.children[1] = temp.toAVL(0);
+        temp.children[0] = parent;
+        // update heights
+        parent.height = 1 + Math.max(getHeight(parent.toAVL(0)),
+                getHeight(parent.toAVL(1)));
+        temp.height = 1 + Math.max(getHeight(temp.toAVL(0)),
+                getHeight(temp.toAVL(1)));
 
+        return temp;
+    }
+
+//    private AVLNode rotateWithLeftChild(AVLNode k2){
+//
+//        AVLNode k1 = (AVLNode) k2.children[0];
+//        k2.children[0] = k1.children[1];
+//        k1.children[1] = k2;
+//        k2.height = Math.max(getHeight(k2.toAVL(0)), getHeight(k2.toAVL(1))) + 1;
+//        k1.height = Math.max(getHeight(k1.toAVL(0)), getHeight(k2)) + 1;
+//        return k1;
+//    }
+//
+//    private AVLNode rotateWithRightChild(AVLNode k2){
+//
+//        AVLNode k1 = (AVLNode) k2.children[1];
+//        k2.children[1] = k1.children[0];
+//        k1.children[0] = k2;
+//        k2.height = Math.max(getHeight(k2.toAVL(1)), getHeight(k2.toAVL(0))) + 1;
+//        k1.height = Math.max(getHeight(k1.toAVL(1)), getHeight(k2)) + 1;
+//        return k1;
+//    }
+//
+//    private AVLNode doubleWithLeftChild(AVLNode k3){
+//        k3.children[0] = rotateWithRightChild(k3.toAVL(0));
+//        return rotateWithLeftChild(k3);
+//    }
+//
+//    private AVLNode doubleWithRightChild(AVLNode k3){
+//        k3.children[0] = rotateWithLeftChild(k3.toAVL(1));
+//        return rotateWithRightChild(k3);
+//    }
+
+    private int getHeight(AVLNode node){
+        return node == null ? -1 : node.height;
     }
 
     public class AVLNode extends BSTNode implements Comparable<AVLNode> {
 
-        private int height;
+        public int height;
 
-        /**
-         * Create a new data node.
-         *
-         * @param key   key with which the specified value is to be associated
-         * @param value
-         */
-        public AVLNode(K key, V value) {
-            super(key, value);
+        public AVLNode(K key, V element) {
+            super(key, element);
             this.height = 0;
         }
 
@@ -116,8 +164,8 @@ public class AVLTree<K extends Comparable<? super K>, V> extends BinarySearchTre
             this.height = height;
         }
 
-        public int getHeight() {
-            return this.height;
+        public AVLNode toAVL (int childIndex) {
+            return (AVLNode) this.children[childIndex];
         }
 
         @Override
@@ -125,58 +173,5 @@ public class AVLTree<K extends Comparable<? super K>, V> extends BinarySearchTre
             return this.key.compareTo(o.key);
         }
     }
-        //    public static boolean verifyAVL(AVLNode root) {
-//        try {
-//            verifyBST(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
-//            verifyHeight(root);
-//            verifyBalance(root);
-//            return true;
-//        } catch (IllegalStateException e) {
-//            return false;
-//        }
-//    }
-//
-//    private static int verifyHeight(AVLNode root){
-//        if (root == null){
-//            return 0;
-//        }
-//        int left = verifyHeight(root.left);
-//        int right = verifyHeight(root.right);
-//        if (root.left != null && root.left.height != left - 1) {
-//            throw new IllegalStateException();
-//        }
-//        if (root.right != null && root.right.height != right - 1) {
-//            throw new IllegalStateException();
-//        }
-//        if (root.height != Math.max(verifyHeight(root.left), verifyHeight(root.right))) {
-//            throw new IllegalStateException();
-//        }
-//        return Math.max(verifyHeight(root.left), verifyHeight(root.right)) + 1;
-//    }
-//
-//    private static void verifyBST(AVLNode node, int min, int max) {
-//        if (node == null) {
-//            return;
-//        }
-//        if (node.left != null)
-//            verifyBST(node.left, min, node.left.key);
-//        if (node.right != null)
-//            verifyBST(node.right, node.right.key, max);
-//        if (node.right != null && (node.right.key < node.key || node.right.key > max))
-//            throw new IllegalStateException();
-//        if (node.left != null && (node.left.key < min || node.left.key > node.key))
-//            throw new IllegalStateException();
-//    }
-//
-//    private static void verifyBalance(AVLNode node){
-//        if(node == null || (node.left == null && node.right == null)){
-//            return;
-//        }
-//        if ((node.right == null && (node.left.height > 1 || node.height > 1)) || (node.left == null && (node.right.height > 1 || node.height > 1)) ||
-//                (node.left != null && node.right != null && Math.abs(node.left.height - node.right.height) > 1 )) {
-//            throw new IllegalStateException();
-//        }
-//        verifyBalance(node.left);
-//        verifyBalance(node.right);
-//    }
+
 }
