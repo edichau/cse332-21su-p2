@@ -8,6 +8,7 @@ import org.junit.Test;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 import static org.junit.Assert.*;
 
@@ -103,11 +104,17 @@ public class HashTrieMapTests {
     @Test(timeout = 3000)
     public void checkUnderlyingStructure() {
         STUDENT.insert(a(""), "A");
+        System.out.println(STUDENT.size());
         STUDENT.insert(a("foo"), "B");
+        System.out.println(STUDENT.size());
         STUDENT.insert(a("fez"), "C");
+        System.out.println(STUDENT.size());
         STUDENT.insert(a("fezzy"), "D");
+        System.out.println(STUDENT.size());
         STUDENT.insert(a("jazz"), "E");
+        System.out.println(STUDENT.size());
         STUDENT.insert(a("jazzy"), "F");
+        System.out.println(STUDENT.size());
 
         MockNode fullExpected = node("A")
                 .branch('f', node()
@@ -122,6 +129,9 @@ public class HashTrieMapTests {
                                 .branch('z', node()
                                         .branch('z', node("E")
                                                 .branch('y', node("F"))))));
+        System.out.println(fullExpected);
+        System.out.println(STUDENT);
+        System.out.println(STUDENT.size());
         assertTrue(equals(fullExpected, getField(STUDENT, "root")));
     }
 
