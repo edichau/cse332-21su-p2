@@ -69,9 +69,11 @@ public class HashTrieMap<A extends Comparable<A>, K extends BString<A>, V> exten
 
         HashTrieNode currNode = (HashTrieNode) this.root;
         Iterator<A> keyItr = key.iterator();
+
         if(!keyItr.hasNext()) {
             V rootVal = currNode.value;
             currNode.value = value;
+            if(rootVal == null) { size++; }
             return rootVal;
         }
         while(keyItr.hasNext()) {
@@ -83,6 +85,7 @@ public class HashTrieMap<A extends Comparable<A>, K extends BString<A>, V> exten
                     return null;
                 } else { //replace value and return the previous value
                     V prevKey = currNode.pointers.find(singleChar).value;
+                    if(prevKey == null) {size++;}
                     currNode.pointers.insert(singleChar, new HashTrieNode(value));
                     return prevKey;
                 }
@@ -138,6 +141,8 @@ public class HashTrieMap<A extends Comparable<A>, K extends BString<A>, V> exten
     public void delete(K key) {
         throw new UnsupportedOperationException();
     }
+
+
 
 
     @Override
