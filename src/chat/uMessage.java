@@ -3,6 +3,7 @@ package chat;
 import cse332.interfaces.misc.Dictionary;
 import cse332.types.AlphabeticString;
 import cse332.types.NGram;
+import datastructures.dictionaries.AVLTree;
 import javafx.embed.swing.JFXPanel;
 import p2.clients.NGramTester;
 import p2.wordsuggestor.WordSuggestor;
@@ -18,11 +19,12 @@ import java.util.function.Supplier;
 
 public class uMessage {
     private static final int N = 3;
-    private static final String CORPUS = "eggs.txt";
-    private static final Supplier<Dictionary<NGram, Dictionary<AlphabeticString, Integer>>> NEW_OUTER = NGramTester
-            .trieConstructor(NGram.class);
-    private static final Supplier<Dictionary<AlphabeticString, Integer>> NEW_INNER = NGramTester
-            .trieConstructor(AlphabeticString.class);
+    private static final String CORPUS = "irc.corpus";
+    private static final Supplier<Dictionary<NGram, Dictionary<AlphabeticString, Integer>>> NEW_OUTER =  NGramTester
+            .avlTreeConstructor();
+    private static final Supplier<Dictionary<AlphabeticString, Integer>> NEW_INNER =
+            NGramTester
+                    .avlTreeConstructor();
 
     /*
      *

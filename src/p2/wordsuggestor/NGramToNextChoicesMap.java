@@ -7,6 +7,8 @@ import cse332.misc.LargeValueFirstItemComparator;
 import cse332.sorts.InsertionSort;
 import cse332.types.AlphabeticString;
 import cse332.types.NGram;
+import p2.sorts.HeapSort;
+import p2.sorts.TopKSort;
 
 import java.util.Comparator;
 import java.util.Iterator;
@@ -75,11 +77,20 @@ public class NGramToNextChoicesMap {
 
         Comparator<Item<String, Integer>> comp = new LargeValueFirstItemComparator<String, Integer>();
         if (k < 0) {
-            InsertionSort.sort(afterNGrams, comp);
+            HeapSort.sort(afterNGrams, comp);
         }
         else {
             // You must fix this line toward the end of the project
-            throw new NotYetImplementedException();
+            TopKSort.sort(afterNGrams, k, comp.reversed());
+            if(k > afterNGrams.length) {
+                k = afterNGrams.length;
+            }
+            Item<String, Integer>[] passItem = new Item[k];
+
+            for (int i = 0; i < k; i++) {
+                passItem[i] = afterNGrams[k-i-1];
+            }
+            afterNGrams = passItem;
         }
 
         String[] nextWords = new String[k < 0 ? afterNGrams.length : k];
