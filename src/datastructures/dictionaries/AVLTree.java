@@ -2,7 +2,7 @@ package datastructures.dictionaries;
 
 import cse332.datastructures.trees.BinarySearchTree;
 import datastructures.worklists.CircularArrayFIFOQueue;
-import javafx.scene.Node;
+
 
 /**
  * AVLTree must be a subclass of BinarySearchTree<E> and must use
