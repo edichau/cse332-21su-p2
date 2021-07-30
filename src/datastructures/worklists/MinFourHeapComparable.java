@@ -33,8 +33,9 @@ public class MinFourHeapComparable<E extends Comparable<E>> extends PriorityWork
         }
 
         // puts in the new work element and percolates it up to find its place
-        this.data[this.size++] = work;
-        this.percolateUp();
+        int ptr = this.size++;
+        this.data[ptr] = work;
+        this.percolateUp(ptr);
     }
 
     @Override
@@ -79,16 +80,23 @@ public class MinFourHeapComparable<E extends Comparable<E>> extends PriorityWork
         this.data = copy;
     }
 
-    private void percolateUp()  {
-        for (int i = size-1; i > 0; i--) {
-            E child = data[i];
-            E parent = data [(i-1)/4];
 
-            // swaps parent and child if parent is larger than child
-            if (child.compareTo(parent) < 0) {
-                data[(i-1)/4] = child;
-                data[i] = parent;
-            }
+    private void percolateUp(int ptr) {
+        while ((ptr - 1) / 4 >= 0 && data[(ptr - 1) / 4].compareTo(data[ptr]) > 0) { //switch node with parent if parent is greater
+            E copy = data[ptr];
+            data[ptr] = data[(ptr - 1) / 4];
+            data[(ptr - 1) / 4] = copy;
+            ptr = (ptr - 1) / 4;
+//        for (int i = size-1; i > 0; i--) {
+//            E child = data[i];
+//            E parent = data [(i-1)/4];
+//
+//            // swaps parent and child if parent is larger than child
+//            if (child.compareTo(parent) < 0) {
+//                data[(i-1)/4] = child;
+//                data[i] = parent;
+//            }
+//        }
         }
     }
 

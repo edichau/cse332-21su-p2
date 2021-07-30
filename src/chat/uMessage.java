@@ -20,11 +20,8 @@ import java.util.function.Supplier;
 public class uMessage {
     private static final int N = 3;
     private static final String CORPUS = "\\C:\\Users\\ediso\\Documents\\me.txt";
-    private static final Supplier<Dictionary<NGram, Dictionary<AlphabeticString, Integer>>> NEW_OUTER =  NGramTester
-            .avlTreeConstructor();
-    private static final Supplier<Dictionary<AlphabeticString, Integer>> NEW_INNER =
-            NGramTester
-                    .avlTreeConstructor();
+    private static final Supplier<Dictionary<NGram, Dictionary<AlphabeticString, Integer>>> NEW_OUTER =  NGramTester.avlTreeConstructor();
+    private static final Supplier<Dictionary<AlphabeticString, Integer>> NEW_INNER = NGramTester.avlTreeConstructor();
 
     /*
      *
