@@ -88,6 +88,8 @@ public class MinFourHeap<E> extends PriorityWorkList<E> {
             if (comparator.compare(child, parent) < 0) {
                 data[(i-1)/4] = child;
                 data[i] = parent;
+            } else {
+                break;
             }
         }
     }
