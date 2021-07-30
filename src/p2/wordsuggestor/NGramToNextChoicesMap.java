@@ -103,6 +103,6 @@ public class NGramToNextChoicesMap {
 
     @Override
     public String toString() {
-        return this.map.toString() + "\n" + this.map.size();
+        return this.map.toString();
     }
 }

@@ -148,7 +148,7 @@ public class HashTrieMap<A extends Comparable<A>, K extends BString<A>, V> exten
     @Override
     @SuppressWarnings("unchecked")
     public void clear() {
-        ((HashTrieNode)this.root).pointers.clear();
+        throw new UnsupportedOperationException();
     }
 
 
