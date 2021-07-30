@@ -117,36 +117,6 @@ public class AVLTree<K extends Comparable<? super K>, V> extends BinarySearchTre
         return temp;
     }
 
-//    private AVLNode rotateWithLeftChild(AVLNode k2){
-//
-//        AVLNode k1 = (AVLNode) k2.children[0];
-//        k2.children[0] = k1.children[1];
-//        k1.children[1] = k2;
-//        k2.height = Math.max(getHeight(k2.toAVL(0)), getHeight(k2.toAVL(1))) + 1;
-//        k1.height = Math.max(getHeight(k1.toAVL(0)), getHeight(k2)) + 1;
-//        return k1;
-//    }
-//
-//    private AVLNode rotateWithRightChild(AVLNode k2){
-//
-//        AVLNode k1 = (AVLNode) k2.children[1];
-//        k2.children[1] = k1.children[0];
-//        k1.children[0] = k2;
-//        k2.height = Math.max(getHeight(k2.toAVL(1)), getHeight(k2.toAVL(0))) + 1;
-//        k1.height = Math.max(getHeight(k1.toAVL(1)), getHeight(k2)) + 1;
-//        return k1;
-//    }
-//
-//    private AVLNode doubleWithLeftChild(AVLNode k3){
-//        k3.children[0] = rotateWithRightChild(k3.toAVL(0));
-//        return rotateWithLeftChild(k3);
-//    }
-//
-//    private AVLNode doubleWithRightChild(AVLNode k3){
-//        k3.children[0] = rotateWithLeftChild(k3.toAVL(1));
-//        return rotateWithRightChild(k3);
-//    }
-
     private int getHeight(AVLNode node){
         return node == null ? -1 : node.height;
     }
