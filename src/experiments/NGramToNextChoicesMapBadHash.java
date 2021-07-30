@@ -1,25 +1,23 @@
-package p2.wordsuggestor;
+package experiments;
 
 import cse332.datastructures.containers.Item;
-import cse332.exceptions.NotYetImplementedException;
 import cse332.interfaces.misc.Dictionary;
 import cse332.misc.LargeValueFirstItemComparator;
-import cse332.sorts.InsertionSort;
 import cse332.types.AlphabeticString;
-import cse332.types.NGram;
 import p2.sorts.HeapSort;
 import p2.sorts.TopKSort;
+import p2.wordsuggestor.NGramToNextChoicesMap;
 
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.function.Supplier;
 
-public class NGramToNextChoicesMap {
-    private final Dictionary<NGram, Dictionary<AlphabeticString, Integer>> map;
+public class NGramToNextChoicesMapBadHash {
+    private final Dictionary<NGramBadHash, Dictionary<AlphabeticString, Integer>> map;
     private final Supplier<Dictionary<AlphabeticString, Integer>> newInner;
 
-    public NGramToNextChoicesMap(
-            Supplier<Dictionary<NGram, Dictionary<AlphabeticString, Integer>>> newOuter,
+    public NGramToNextChoicesMapBadHash(
+            Supplier<Dictionary<NGramBadHash, Dictionary<AlphabeticString, Integer>>> newOuter,
             Supplier<Dictionary<AlphabeticString, Integer>> newInner) {
         this.map = newOuter.get();
         this.newInner = newInner;
@@ -28,7 +26,7 @@ public class NGramToNextChoicesMap {
     /**
      * Increments the count of word after the particular NGram ngram.
      */
-    public void seenWordAfterNGram(NGram ngram, String word) {
+    public void seenWordAfterNGram(NGramBadHash ngram, String word) {
         Dictionary<AlphabeticString, Integer> counter = map.find(ngram);
         if (counter == null) {
             counter = newInner.get();
@@ -52,7 +50,7 @@ public class NGramToNextChoicesMap {
      * 
      * @return An array of all the Items for the requested ngram.
      */
-    public Item<String, Integer>[] getCountsAfter(NGram ngram) {
+    public Item<String, Integer>[] getCountsAfter(NGramBadHash ngram) {
         if (ngram == null) {
             return (Item<String, Integer>[]) new Item[0];
         }
@@ -72,7 +70,7 @@ public class NGramToNextChoicesMap {
 
     }
 
-    public String[] getWordsAfter(NGram ngram, int k) {
+    public String[] getWordsAfter(NGramBadHash ngram, int k) {
         Item<String, Integer>[] afterNGrams = getCountsAfter(ngram);
 
         Comparator<Item<String, Integer>> comp = new LargeValueFirstItemComparator<String, Integer>();
@@ -103,6 +101,5 @@ public class NGramToNextChoicesMap {
 
     @Override
     public String toString() {
-        return this.map.toString() + "\n" + this.map.size();
-    }
+        return this.map.toString() + this.map.size(); }
 }

@@ -48,14 +48,13 @@ public class ChainingHashTable<K, V> extends DeletelessDictionary<K,V> {
     @SuppressWarnings("unchecked")
     @Override
     public V insert(K key, V value) {
-        if (key == null || value == null) {
-            throw new IllegalArgumentException();
-        }
+        if (key == null ) { throw new IllegalArgumentException(); }
+        if (value == null) {throw new IllegalArgumentException(); }
         if (needResize()) {
             resize();
         }
 
-        int index = key.hashCode() % table.length;
+        int index = Math.abs(key.hashCode()) % table.length;
         if (table[index] == null) {
             Dictionary<K, V> dict = newChain.get();
             dict.insert(key, value);
@@ -74,7 +73,8 @@ public class ChainingHashTable<K, V> extends DeletelessDictionary<K,V> {
     @SuppressWarnings("unchecked")
     @Override
     public V find(K key) {
-        int index = key.hashCode() % table.length;
+        if(key == null) { return null; }
+        int index = Math.abs(key.hashCode() % table.length);
         if (table[index] == null) {
             return null;
         } else {
@@ -166,7 +166,7 @@ public class ChainingHashTable<K, V> extends DeletelessDictionary<K,V> {
         for (Dictionary<K,V> index : table) { //Iterate through hashTable to rehash
             if (index != null) { //Index is nonNull, rehash every key at index
                 for (Item<K, V> item : index) {
-                    int newIndex = item.key.hashCode() % newSize;
+                    int newIndex = Math.abs(item.key.hashCode()) % newSize;
                     if (newTable[newIndex] == null) {
                         Dictionary<K, V> dict = newChain.get();
                         dict.insert(item.key, item.value);
